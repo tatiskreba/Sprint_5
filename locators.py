@@ -17,9 +17,8 @@ class Locators:
     LOGO = (By.XPATH, "//div[@class='AppHeader_header__logo__2D0X2']") # логотип сайта
     LOGIN_TEXT = (By.XPATH, "//h2[text()='Вход']") # текст "Вход" на странице входа
     LOGIN_BUTTON_ANY_FORMS = (By.XPATH, "//button[contains(text(), 'Войти')]") # кнопка "Войти" на странице входа
-    LOGIN_TEXT_WITH_HREF = (By.XPATH, "//a[text()='Войти']")  # текст "Войти" со ссылкой на страницу входа на странице восстановления пароля
+    LOGIN_TEXT_WITH_HREF = (By.XPATH, "//a[text()='Войти']")  # текст "Войти" со ссылкой на страницу входа
     ELEMENT_WITH_LOGIN_TEXT = (By.XPATH, "//*[text() = 'Вход']") # элемент с текстом "Вход" на странице входа
     ERROR_MESSAGE = (By.XPATH, "//p[contains(@class, 'input__error')]") # сообщение об ошибке на странице регистрации
-    ERROR_MESSAGE_TWO = (By.XPATH, "//div[@class='Auth_login__3hAey']/p[@class='input__error text_type_main-default']") # сообщение об ошибке на странице регистрации (альтернативное) # кнопка "Войти" на странице регистрации, которая ведет на страницу входа
-    INFO_MESSAGE = (By.XPATH, "//p[contains(text(),'персональные данные')]") # сообщение о том, что нужно заполнить персональные данные
+    ERROR_MESSAGE_TWO = (By.XPATH, "//div[@class='Auth_login__3hAey']/p[@class='input__error text_type_main-default']") # сообщение об ошибке на странице регистрации
     HISTORY_SHOP_BUTTON = (By.XPATH, "//li[@class='Account_listItem__35dAP']/a[@class='Account_link__2ETsJ text text_type_main-medium text_color_inactive']") # кнопка "История заказов" в личном кабинете
