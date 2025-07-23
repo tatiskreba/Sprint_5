@@ -1,26 +1,27 @@
-from locators import *
 from selenium.webdriver.support import expected_conditions as EC
-import conftest
+from selenium.webdriver.support.wait import WebDriverWait
+from locators import Locators
+from urls import URL_MAIN_PAGE
 
-class TestStellarBurgers:
-
-    def test_button_bread(self, driver):
-        conftest.wait_for_element_located(driver, time=10, locator=Locators.CONSTRUCTOR_BUTTON, condition=EC.presence_of_element_located)
-        driver.find_element(*Locators.CONSTRUCTOR_BUTTON).click()
-        conftest.wait_for_element_located(driver, time=10, locator=Locators.SAUCES_BUTTON, condition=EC.presence_of_element_located)
-        driver.find_element(*Locators.SAUCES_BUTTON).click()
-        conftest.wait_for_element_located(driver, time=10, locator=Locators.BUN_BUTTON, condition=EC.presence_of_element_located)
-        driver.find_element(*Locators.BUN_BUTTON).click()
-        assert 'tab_tab_type_current' in driver.find_element(*Locators.BUN_BUTTON).get_attribute('class')
+class TestBurgerConstructor:
 
     def test_button_sauces(self, driver):
-        conftest.wait_for_element_located(driver, time=10, locator=Locators.CONSTRUCTOR_BUTTON, condition=EC.presence_of_element_located)
-        driver.find_element(*Locators.CONSTRUCTOR_BUTTON).click()
-        conftest.wait_for_element_located(driver, time=10, locator=Locators.SAUCES_BUTTON, condition=EC.presence_of_element_located)
+        driver.get(URL_MAIN_PAGE)
         driver.find_element(*Locators.SAUCES_BUTTON).click()
-        assert 'tab_tab_type_current' in driver.find_element(*Locators.SAUCES_BUTTON).get_attribute('class')
+        active_tab = WebDriverWait(driver, 20).until(EC.visibility_of_element_located(Locators.ACTIV_TAB))
+        assert active_tab.text == 'Соусы'
 
     def test_button_filling(self, driver):
-        conftest.wait_for_element_located(driver, time=10, locator=Locators.FILLING_BUTTON, condition=EC.presence_of_element_located)
+        driver.get(URL_MAIN_PAGE)
         driver.find_element(*Locators.FILLING_BUTTON).click()
-        assert 'tab_tab_type_current' in driver.find_element(*Locators.FILLING_BUTTON).get_attribute('class')
+        active_tab = WebDriverWait(driver, 20).until(EC.visibility_of_element_located(Locators.ACTIV_TAB))
+        assert active_tab.text == 'Начинки'
+
+    def test_button_buns(self, driver):
+        driver.find_element(*Locators.FILLING_BUTTON).click()
+        WebDriverWait(driver, 3).until(EC.visibility_of_element_located(Locators.SAUCES))
+        driver.find_element(*Locators.BUN_BUTTON).click()
+        WebDriverWait(driver, 3).until(EC.visibility_of_element_located(Locators.BUN))
+        activ_tab = WebDriverWait(driver, 3).until(EC.visibility_of_element_located(Locators.ACTIV_TAB))
+        assert activ_tab.text == 'Булки'
+

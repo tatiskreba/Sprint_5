@@ -1,13 +1,22 @@
 from selenium.webdriver.support import expected_conditions as EC
-from locators import *
-from urls import Urls
-import conftest
+from selenium.webdriver.support.wait import WebDriverWait
+from urls import *
+from data import Credentials
+from locators import Locators
 
 class TestStellarBurgersProfileNavigation:
 
-    def test_click_profile_button_open_profile_form(self, driver, login):
-        driver = login
+    def test_transit_to_personal_account_authorized(self, driver):
         driver.find_element(*Locators.PROFILE_BUTTON).click()
-        conftest.wait_for_element_located(driver, time=10, locator=Locators.INFO_MESSAGE, condition=EC.presence_of_element_located)
-        profile = driver.find_element(*Locators.HISTORY_SHOP_BUTTON)
-        assert Urls.URL_PROFILE == driver.current_url and profile.text == 'История заказов'
+        driver.find_element(*Locators.EMAIL_FIELD).send_keys(Credentials.LOGIN)
+        driver.find_element(*Locators.PASSWORD_FIELD).send_keys(Credentials.PASSWORD)
+        driver.find_element(*Locators.LOGIN_BUTTON_ANY_FORMS).click()
+        WebDriverWait(driver, 3).until(EC.visibility_of_element_located(Locators.PROFILE_BUTTON))
+        driver.find_element(*Locators.PROFILE_BUTTON).click()
+        WebDriverWait(driver, 3).until(EC.visibility_of_element_located(Locators.LOGOUT_BUTTON))
+        assert driver.current_url == URL_PROFILE
+
+    def test_transit_to_personal_account_no_authorized(self, driver):
+        driver.find_element(*Locators.PROFILE_BUTTON).click()
+        WebDriverWait(driver, 3).until(EC.visibility_of_element_located(Locators.REGISTER_BUTTON))
+        assert driver.current_url == URL_LOGIN
