@@ -27,7 +27,7 @@ class TestStellarBurgersLoginLogoutForm:
         driver.get(URL_REGISTER)
         driver.find_element(*Locators.FORM_LOGIN_TEXT).click()
         driver.find_element(*Locators.EMAIL_FIELD).send_keys(Credentials.LOGIN)
-        driver.find_element(*Locators.PASSWORD_FIELD).send_keys(Credentials.PASSWORD)
+        driver.find_element(*Locators.PASSWORD_FIELD.send_keys(Credentials.PASSWORD))
         driver.find_element(*Locators.LOGIN_BUTTON_ANY_FORMS).click()
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(Locators.ORDER_BUTTON))
         assert driver.current_url == URL_MAIN_PAGE
